@@ -1,0 +1,54 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: "AWS::Serverless-2016-10-31"
+Description: "CloudFormation Pitagora - Function"
+
+Parameters:
+  ProjectName:
+    Description: "Project name"
+    Type: "String"
+    Default: "cfn-pitagora"
+  EnvCode:
+    Description: "Environment code"
+    Type: "String"
+    Default: "demo"
+    AllowedValues: [ "demo" ]
+
+Globals:
+  Function:
+    Timeout: 10
+    MemorySize: 256
+
+Resources:
+  Function:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      FunctionName: !Sub "${ProjectName}-${EnvCode}-sample"
+      CodeUri: "src/"
+      Handler: "app.lambda_handler"
+      Runtime: "python3.9"
+      Architectures: [ "arm64" ]
+      FunctionUrlConfig:
+        AuthType: "NONE"
+      Layers:
+        - "arn:aws:lambda:us-west-2:345057560386:layer:AWS-Parameters-and-Secrets-Lambda-Extension-Arm64:4"  # https://docs.aws.amazon.com/systems-manager/latest/userguide/ps-integration-lambda-extensions.html#arm64
+        - "arn:aws:lambda:us-west-2:017000801446:layer:AWSLambdaPowertoolsPythonV2-Arm64:23"  # https://awslabs.github.io/aws-lambda-powertools-python/2.9.1/
+      Policies:
+        - SSMParameterReadPolicy:  # https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/serverless-policy-template-list.html#ssm-parameter-read-policy
+            ParameterName: "twitter/*"
+      Environment:
+        Variables:
+          POWERTOOLS_SERVICE_NAME: "sample"
+          LOG_LEVEL: "DEBUG"
+          POWERTOOLS_LOGGER_LOG_EVENT: "true"
+      #     PARAMETERS_SECRETS_EXTENSION_LOG_LEVEL: "DEBUG"
+  FunctionLogGroup:
+    Type: "AWS::Logs::LogGroup"
+    DeletionPolicy: "Delete"
+    UpdateReplacePolicy: "Delete"
+    Properties:
+      LogGroupName: !Sub "/aws/lambda/${Function}"
+      RetentionInDays: 14
+
+Outputs:
+  FunctionUrl:
+    Value: !GetAtt "FunctionUrl.FunctionUrl"

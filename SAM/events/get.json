@@ -1,0 +1,39 @@
+{
+    "version": "2.0",
+    "routeKey": "$default",
+    "rawPath": "/",
+    "rawQueryString": "key=value",
+    "headers": {
+        "x-amzn-tls-cipher-suite": "ECDHE-RSA-AES128-GCM-SHA256",
+        "x-amzn-tls-version": "TLSv1.2",
+        "x-amzn-trace-id": "Root=1-00000000-000000000000000000000000",
+        "x-forwarded-proto": "https",
+        "host": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.lambda-url.us-west-2.on.aws",
+        "x-forwarded-port": "443",
+        "x-forwarded-for": "192.0.2.1",
+        "accept": "*/*",
+        "user-agent": "curl/7.88.1"
+    },
+    "queryStringParameters": {
+        "key": "value"
+    },
+    "requestContext": {
+        "accountId": "anonymous",
+        "apiId": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "domainName": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.lambda-url.us-west-2.on.aws",
+        "domainPrefix": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "http": {
+            "method": "GET",
+            "path": "/",
+            "protocol": "HTTP/1.1",
+            "sourceIp": "192.0.2.1",
+            "userAgent": "curl/7.88.1"
+        },
+        "requestId": "00000000-0000-0000-0000-000000000000",
+        "routeKey": "$default",
+        "stage": "$default",
+        "time": "15/Mar/2023:06:53:15 +0000",
+        "timeEpoch": 1678863195212
+    },
+    "isBase64Encoded": false
+}

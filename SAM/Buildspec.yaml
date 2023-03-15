@@ -1,0 +1,25 @@
+version: 0.2
+env:
+  variables:
+    DOCKER_BUILDKIT: '1'
+  # parameter-store:
+phases:
+  install:
+    runtime-versions:
+      python: 3.9
+    commands:
+      - pip3.9 install poetry aws-sam-cli
+  pre_build:
+    commands:
+      - poetry config virtualenvs.in-project false
+      - poetry install
+  build:
+    commands:
+      - sam build
+  post_build:
+    commands:
+      - sam package > cfn_template.yaml
+artifacts:
+  files:
+    - cfn_template.yaml
+# cache:
