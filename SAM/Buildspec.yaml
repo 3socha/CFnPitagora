@@ -12,6 +12,7 @@ phases:
   pre_build:
     commands:
       - poetry config virtualenvs.in-project false
+      - cd SAM/
       - poetry install
   build:
     commands:
